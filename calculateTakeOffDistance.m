@@ -1,17 +1,27 @@
 function takeOffDistance = calculateTakeOffDistance(A, rho, cl, cd, deltaT, m, thrust)
-    x0 = 0;
-    currentTime = 0;
-    a = 0;
-    g = 9.8;
-    currentVelocity = 0;
-    drag = calculateDrag();
+
+    %Inputs:
+        %A = surface area of the wing (top view down)
+        %rho = air density
+        %cl = coefficient of lift
+        %deltaT = time steps
+        %m = mass of plane
+        %thrust = max thrust of engine
+
+    x0 = 0;                 %initial position
+    currentTime = 0;        %current time
+    a = 0;                  %initial acceleration
+    g = 9.8;                %acceleration due to gravity
+    currentVelocity = 0;    %sets start velocity
+    drag = calculateDrag(); %calls calculateDrag function (below)
     
     function finalVelocity = calculateEndVelocity()
+        %KE = .5(mv^2)
         finalVelocity = ((2*m*g)/(rho*A*cl))^.5;
     end
     endVelocity = calculateEndVelocity();
     
-    hold all;
+    hold on;
     while(currentVelocity < endVelocity)
         if(thrust >= drag)
             drag = calculateDrag();
